@@ -11,8 +11,10 @@ class SuperHeroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvName = view.findViewById<TextView>(R.id.tvSuperHeroName)
     val tvId = view.findViewById<TextView>(R.id.tvId)
 
-    fun render(superhero: Superhero) {
+    fun render(superhero: Superhero, onItemRemove: (Superhero) -> Unit) {
         tvName.text = superhero.name
         tvId.text = superhero.id
+        ///
+        tvName.setOnClickListener { onItemRemove(superhero) } //-> pasar aqui la funcion lambda
     }
 }

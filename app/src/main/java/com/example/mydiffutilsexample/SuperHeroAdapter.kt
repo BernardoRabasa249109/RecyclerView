@@ -2,11 +2,21 @@ package com.example.mydiffutilsexample
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 //en los parentesis recibirá un listado de mi data class superhero : luego implementar el view holder y en los <va el viewHolder>
-class SuperHeroAdapter(private val list: List<Superhero>) :
+class SuperHeroAdapter(private var list: List<Superhero>, val onItemRemove:(Superhero) -> Unit) : //->Funcion lambda
     RecyclerView.Adapter<SuperHeroViewHolder>() {
+
+    fun updateList(newList: List<Superhero>){
+        val superheroDiff = SuperheroDiffUtil(list, newList)
+        val result = DiffUtil.calculateDiff(superheroDiff)
+        list = newList
+        result.dispatchUpdatesTo(this)
+    }
+
+
     //Este metodo crea la vista
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperHeroViewHolder {
         return SuperHeroViewHolder(
@@ -19,8 +29,7 @@ class SuperHeroAdapter(private val list: List<Superhero>) :
 
     //Este metodo es pintar con los datos que te mando,
     override fun onBindViewHolder(holder: SuperHeroViewHolder, position: Int) {
-
-        holder.render(list[position])
+        holder.render(list[position], onItemRemove)
     }
 
 }

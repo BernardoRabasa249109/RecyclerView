@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyDiffUtilsExample</string>
+    <string name="newHero">New Super Hero</string>
 </resources>
